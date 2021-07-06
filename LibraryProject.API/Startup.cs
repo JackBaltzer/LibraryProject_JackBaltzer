@@ -1,17 +1,12 @@
+using LibraryProject.API.Database;
 using LibraryProject.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LibraryProject.API
 {
@@ -28,6 +23,9 @@ namespace LibraryProject.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IAuthorService, AuthorService>();
+
+            services.AddDbContext<LibraryProjectContext>(
+               o => o.UseSqlServer(Configuration.GetConnectionString("Default")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
