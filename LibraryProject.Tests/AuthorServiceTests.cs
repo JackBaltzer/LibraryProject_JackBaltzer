@@ -19,7 +19,7 @@ namespace LibraryProject.Tests
         }
 
         [Fact]
-        public void GetAll_ShouldReturnListOfAuthorResponses_WhenAuthorsExist()
+        public async void GetAll_ShouldReturnListOfAuthorResponses_WhenAuthorsExist()
         {
             // Arrange
             List<Author> Authors = new List<Author>();
@@ -41,10 +41,10 @@ namespace LibraryProject.Tests
 
             _authorRepository
                 .Setup(a => a.GetAll())
-                .Returns(Authors);
+                .ReturnsAsync(Authors);
 
             // Act
-            var result = _sut.GetAllAuthors();
+            var result = await _sut.GetAllAuthors();
 
             // Assert
             Assert.NotNull(result);

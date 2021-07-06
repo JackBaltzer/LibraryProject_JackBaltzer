@@ -3,12 +3,13 @@ using LibraryProject.API.DTOs.Responses;
 using LibraryProject.API.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LibraryProject.API.Services
 {
     public interface IAuthorService
     {
-        List<AuthorResponse> GetAllAuthors();
+        Task<List<AuthorResponse>> GetAllAuthors();
     }
 
     public class AuthorService : IAuthorService
@@ -20,9 +21,9 @@ namespace LibraryProject.API.Services
             _authorRepository = authorRepository;
         }
 
-        public List<AuthorResponse> GetAllAuthors()
+        public async Task<List<AuthorResponse>> GetAllAuthors()
         {
-            IEnumerable<Author> Authors = _authorRepository.GetAll();
+            List<Author> Authors = await _authorRepository.GetAll();
             return Authors.Select(a => new AuthorResponse
             {
                 Id = a.Id,

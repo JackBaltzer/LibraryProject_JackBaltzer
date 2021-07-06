@@ -1,8 +1,10 @@
 ﻿using LibraryProject.API.DTOs.Responses;
 using LibraryProject.API.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LibraryProject.API.Controllers
 {
@@ -18,11 +20,14 @@ namespace LibraryProject.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                List<AuthorResponse> Authors = _authorService.GetAllAuthors();
+                List<AuthorResponse> Authors = await _authorService.GetAllAuthors();
 
                 if (Authors == null)
                 {
@@ -41,5 +46,8 @@ namespace LibraryProject.API.Controllers
                 return Problem(ex.Message);
             }
         }
+
+
+
     }
 }

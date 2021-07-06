@@ -24,7 +24,7 @@ namespace LibraryProject.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IAuthorService, AuthorService>();
-            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();           
 
             services.AddDbContext<LibraryProjectContext>(
                o => o.UseSqlServer(Configuration.GetConnectionString("Default")));

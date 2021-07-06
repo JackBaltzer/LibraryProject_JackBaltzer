@@ -19,7 +19,7 @@ namespace LibraryProject.Tests
         }
 
         [Fact]
-        public void GetAll_ShouldReturnStatusCode200_WhenDataExists()
+        public async void GetAll_ShouldReturnStatusCode200_WhenDataExists()
         {
             // Arrange
             List<AuthorResponse> Authors = new();
@@ -42,11 +42,10 @@ namespace LibraryProject.Tests
 
             _authorService
                 .Setup(s => s.GetAllAuthors())
-                .Returns(Authors);
-
+                .ReturnsAsync(Authors);
 
             // Act
-            var result = _sut.GetAll();
+            var result = await _sut.GetAll();
 
             // Assert
             var statusCodeResult = (IStatusCodeActionResult)result;
@@ -54,17 +53,17 @@ namespace LibraryProject.Tests
         }
 
         [Fact]
-        public void GetAll_ShouldReturnStatusCode204_WhenNoElementsExists()
+        public async void GetAll_ShouldReturnStatusCode204_WhenNoElementsExists()
         {
             // Arrange
             List<AuthorResponse> Authors = new();
 
             _authorService
                 .Setup(s => s.GetAllAuthors())
-                .Returns(Authors);
+                .ReturnsAsync(Authors);
 
             // Act
-            var result = _sut.GetAll();
+            var result = await _sut.GetAll();
 
             // Assert
             var statusCodeResult = (IStatusCodeActionResult)result;
@@ -72,15 +71,15 @@ namespace LibraryProject.Tests
         }
 
         [Fact]
-        public void GetAll_ShouldReturnStatusCode500_WhenNullIsReturnedFromService()
+        public async void GetAll_ShouldReturnStatusCode500_WhenNullIsReturnedFromService()
         {
             // Arrange
             _authorService
                 .Setup(s => s.GetAllAuthors())
-                .Returns(() => null);
+                .ReturnsAsync(() => null);
 
             // Act
-            var result = _sut.GetAll();
+            var result = await _sut.GetAll();
 
             // Assert
             var statusCodeResult = (IStatusCodeActionResult)result;
@@ -88,15 +87,15 @@ namespace LibraryProject.Tests
         }
 
         [Fact]
-        public void GetAll_ShouldReturnStatusCode500_WhenExceptionIsRaised()
+        public async void GetAll_ShouldReturnStatusCode500_WhenExceptionIsRaised()
         {
             // Arrange
             _authorService
                 .Setup(s => s.GetAllAuthors())
-                .Returns(() => throw new System.Exception("This is an exception"));
+                .ReturnsAsync(() => throw new System.Exception("This is an exception"));
 
             // Act
-            var result = _sut.GetAll();
+            var result = await _sut.GetAll();
 
             // Assert
             var statusCodeResult = (IStatusCodeActionResult)result;
