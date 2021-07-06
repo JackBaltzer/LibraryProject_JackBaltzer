@@ -1,4 +1,5 @@
 using LibraryProject.API.Database;
+using LibraryProject.API.Repositories;
 using LibraryProject.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,7 @@ namespace LibraryProject.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
 
             services.AddDbContext<LibraryProjectContext>(
                o => o.UseSqlServer(Configuration.GetConnectionString("Default")));
