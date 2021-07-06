@@ -9,7 +9,6 @@ namespace LibraryProject.API.DTOs.Requests
         [MinLength(1, ErrorMessage = "Firstname must contain atleast 1 char")]
         public string FirstName { get; set; }
 
-        [Required]
         [StringLength(32, ErrorMessage = "MiddleName must be less than 32 chars")]
         public string MiddleName { get; set; }
 

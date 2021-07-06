@@ -101,5 +101,30 @@ namespace LibraryProject.Tests
             var statusCodeResult = (IStatusCodeActionResult)result;
             Assert.Equal(500, statusCodeResult.StatusCode);
         }
+ 
+        [Fact]
+        public async void GetById_ShouldReturnStatusCode200_WhenDataExists()
+        {
+            // Arrange
+            int authorId = 1;
+            AuthorResponse Author = new AuthorResponse
+            {
+                Id = authorId,
+                FirstName = "George",
+                LastName = "Martin",
+                MiddleName = "R.R."
+            };
+        
+            _authorService
+                .Setup(s => s.GetById(It.IsAny<int>()))
+                .ReturnsAsync(Author);
+
+            // Act
+            var result = await _sut.GetById(authorId);
+
+            // Assert
+            var statusCodeResult = (IStatusCodeActionResult)result;
+            Assert.Equal(200, statusCodeResult.StatusCode);
+        }
     }
 }
