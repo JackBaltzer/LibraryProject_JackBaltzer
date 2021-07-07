@@ -13,6 +13,8 @@ namespace LibraryProject.API
 {
     public class Startup
     {
+        readonly string CORSRules = "_CORSRules";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,6 +25,17 @@ namespace LibraryProject.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: CORSRules,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                    });
+            });
+
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();           
 
@@ -47,6 +60,8 @@ namespace LibraryProject.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(CORSRules);
 
             app.UseRouting();
 
