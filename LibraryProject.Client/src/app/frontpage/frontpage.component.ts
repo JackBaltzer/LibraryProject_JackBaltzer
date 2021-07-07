@@ -13,14 +13,11 @@ export class FrontpageComponent implements OnInit {
   authors: Author[] = [];
 
   constructor(
-    private authorService:AuthorService
+    private authorService: AuthorService
   ) { }
 
   ngOnInit(): void {
     this.authorService.getAuthors()
       .subscribe(a => this.authors = a);
   }
-
-
-
 }
