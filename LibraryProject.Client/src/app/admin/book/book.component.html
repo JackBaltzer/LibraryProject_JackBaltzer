@@ -10,7 +10,7 @@
 </div>
 <div>
   <label>Forfatter</label>
-  <select [(ngModel)]="book.authorId" (change)="optionsSelect(authors_.value)" #authors_ >
+  <select [(ngModel)]="book.authorId">
     <option [value]="0" selected disabled>Vælg Forfatter</option>
     <option *ngFor="let author of authors" [value]="author.id">{{ author.firstName}}
       {{ author.middleName}} {{ author.lastName}}</option>

@@ -27,9 +27,6 @@ export class BookComponent implements OnInit {
     this.getAuthors();
   }
 
-  optionsSelect(value: any): void {
-    console.log(value);
-  }
   newBook(): Book {
     return { id: 0, title: '', pages: 0, authorId: 0 }
   }
