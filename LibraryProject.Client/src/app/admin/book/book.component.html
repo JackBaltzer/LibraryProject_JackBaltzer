@@ -1,0 +1,37 @@
+<h1>Bog Administration</h1>
+
+<div>
+  <label>Titel</label>
+  <input [(ngModel)]="book.title">
+</div>
+<div>
+  <label>Sideantal</label>
+  <input type="number" [(ngModel)]="book.pages">
+</div>
+<div>
+  <label>Forfatter</label>
+  <select [(ngModel)]="book.authorId" (change)="optionsSelect(authors_.value)" #authors_ >
+    <option [value]="0" selected disabled>Vælg Forfatter</option>
+    <option *ngFor="let author of authors" [value]="author.id">{{ author.firstName}}
+      {{ author.middleName}} {{ author.lastName}}</option>
+  </select>
+</div>
+<button (click)="save()">Gem</button>
+<button (click)="cancel()">Annuller</button>
+<span>{{ message }}</span>
+
+<table>
+  <tr>
+    <th>Actions</th>
+    <th>Titel</th>
+    <th>Sideantal</th>
+  </tr>
+  <tr *ngFor="let book of books">
+    <td>
+      <button (click)="edit(book)">Ret</button>
+      <button (click)="delete(book)">Slet</button>
+    </td>
+    <td>{{ book.title }}</td>
+    <td class="right">{{ book.pages }}</td>
+  </tr>
+</table>

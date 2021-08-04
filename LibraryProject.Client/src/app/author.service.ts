@@ -9,7 +9,7 @@ import { Author } from './models';
 })
 export class AuthorService {
 
-  private apiUrl = 'https://localhost:5001/api/author';
+  apiUrl = 'https://localhost:5001/api/author';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -31,11 +31,11 @@ export class AuthorService {
     return this.http.post<Author>(this.apiUrl, author, this.httpOptions);
   }
 
-  updateAuthor(authorId:number, author:Author):Observable<Author>{
+  updateAuthor(authorId: number, author: Author): Observable<Author> {
     return this.http.put<Author>(`${this.apiUrl}/${authorId}`, author, this.httpOptions);
   }
 
-  deleteAuthor(authorId:number): Observable<boolean>{
+  deleteAuthor(authorId: number): Observable<boolean> {
     return this.http.delete<boolean>(`${this.apiUrl}/${authorId}`, this.httpOptions);
   }
 }

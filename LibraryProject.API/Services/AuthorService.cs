@@ -29,12 +29,19 @@ namespace LibraryProject.API.Services
         public async Task<List<AuthorResponse>> GetAllAuthors()
         {
             List<Author> authors = await _authorRepository.GetAll();
+
             return authors == null ? null : authors.Select(a => new AuthorResponse
             {
                 Id = a.Id,
                 FirstName = a.FirstName,
                 LastName = a.LastName,
-                MiddleName = a.MiddleName
+                MiddleName = a.MiddleName,
+                Books = a.Books.Select(b => new AuthorBookResponse
+                {
+                    Id = b.Id,
+                    Title = b.Title,
+                    Pages = b.Pages
+                }).ToList()
             }).ToList();
         }
 
@@ -47,7 +54,13 @@ namespace LibraryProject.API.Services
                 Id = author.Id,
                 FirstName = author.FirstName,
                 MiddleName = author.MiddleName,
-                LastName = author.LastName
+                LastName = author.LastName,
+                Books = author.Books.Select(b => new AuthorBookResponse
+                {
+                    Id = b.Id,
+                    Title = b.Title,
+                    Pages = b.Pages
+                }).ToList()
             };
         }
 

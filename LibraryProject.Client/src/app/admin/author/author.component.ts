@@ -11,7 +11,7 @@ import { Author } from 'src/app/models';
 export class AuthorComponent implements OnInit {
 
   authors: Author[] = [];
-  author: Author = { id: 0, firstName: '', lastName: '', middleName: '' };
+  author: Author = this.newAuthor();
   message: string[] = [];
 
   constructor(
@@ -20,6 +20,10 @@ export class AuthorComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAuthors();
+  }
+
+  newAuthor(): Author {
+    return { id: 0, firstName: '', lastName: '', middleName: '', books: [] };
   }
 
   getAuthors(): void {
@@ -43,7 +47,7 @@ export class AuthorComponent implements OnInit {
 
   cancel(): void {
     this.message = [];
-    this.author = { id: 0, firstName: '', lastName: '', middleName: '' };
+    this.author = this.newAuthor();
     this.getAuthors();
   }
 
@@ -60,12 +64,12 @@ export class AuthorComponent implements OnInit {
         this.authorService.addAuthor(this.author)
           .subscribe(a => {
             this.authors.push(a)
-            this.author = { id: 0, firstName: '', lastName: '', middleName: '' };
+            this.author = this.newAuthor();
           });
       } else {
         this.authorService.updateAuthor(this.author.id, this.author)
           .subscribe(() => {
-            this.author = { id: 0, firstName: '', lastName: '', middleName: '' };
+            this.author = this.newAuthor();
           });
       }
     }

@@ -16,10 +16,18 @@
 <button (click)="cancel()">Annuller</button>
 <span>{{ message }}</span>
 
-<ul>
-  <li *ngFor="let author of authors">
-    <button (click)="edit(author)">Ret</button>
-    <button (click)="delete(author)">Slet</button>
-    {{author.firstName}} {{author.middleName}} {{author.lastName}}
-  </li>
-</ul>
+<table>
+  <tr>
+    <th>Actions</th>
+    <th>Fornavn</th>
+    <th>Efternavn</th>
+  </tr>
+  <tr *ngFor="let author of authors">
+    <td>
+      <button (click)="edit(author)">Ret</button>
+      <button (click)="delete(author)">Slet</button>
+    </td>
+    <td>{{author.firstName}}</td>
+    <td>{{author.lastName}}</td>
+  </tr>
+</table>

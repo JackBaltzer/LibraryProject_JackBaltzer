@@ -26,12 +26,14 @@ namespace LibraryProject.API.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(32)");
 
                     b.Property<string>("MiddleName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(32)");
 
                     b.HasKey("Id");
@@ -52,6 +54,58 @@ namespace LibraryProject.API.Migrations
                             FirstName = "James",
                             LastName = "Corey",
                             MiddleName = "S.A."
+                        });
+                });
+
+            modelBuilder.Entity("LibraryProject.API.Database.Entities.Book", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Pages")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Book");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthorId = 1,
+                            Pages = 694,
+                            Title = "A Game of Thrones"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AuthorId = 1,
+                            Pages = 708,
+                            Title = "A Clash of Kings"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AuthorId = 2,
+                            Pages = 577,
+                            Title = "Leviathan Wakes"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AuthorId = 2,
+                            Pages = 544,
+                            Title = "Babylons Ashes"
                         });
                 });
 #pragma warning restore 612, 618
