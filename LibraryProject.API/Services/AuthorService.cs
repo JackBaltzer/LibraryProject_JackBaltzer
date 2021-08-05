@@ -107,7 +107,7 @@ namespace LibraryProject.API.Services
         public async Task<bool> Delete(int authorId)
         {
             var result = await _authorRepository.Delete(authorId);
-            return true;
+            return result != null;
         }
     }
 }

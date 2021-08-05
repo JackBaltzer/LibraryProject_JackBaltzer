@@ -111,6 +111,7 @@ namespace LibraryProject.API.Services
                 Pages = book.Pages,
                 Author = new BookAuthorResponse
                 {
+                    Id = author.Id,
                     FirstName = author.FirstName,
                     MiddleName = author.MiddleName,
                     LastName = author.LastName
@@ -121,7 +122,8 @@ namespace LibraryProject.API.Services
         public async Task<bool> Delete(int bookId)
         {
             var result = await _bookRepository.Delete(bookId);
-            return true;
+           
+            return result != null;
         }
     }
 }

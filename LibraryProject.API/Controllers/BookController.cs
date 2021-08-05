@@ -46,29 +46,6 @@ namespace LibraryProject.API.Controllers
                 return Problem(ex.Message);
             }
         }
-        //[HttpGet("Author/{authorId}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<IActionResult> GetByAuthorId([FromRoute] int authorId)
-        //{
-        //    try
-        //    {
-        //        List<BookResponse> books = await _bookService.GetAllByAuthorId(authorId);
-
-        //        if (books == null)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        return Ok(books);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Problem(ex.Message);
-        //    }
-        //}
 
         [HttpGet("{bookId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

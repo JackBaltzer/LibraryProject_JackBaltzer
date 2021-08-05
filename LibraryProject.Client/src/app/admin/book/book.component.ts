@@ -3,7 +3,6 @@ import { AuthorService } from 'src/app/author.service';
 import { BookService } from 'src/app/book.service';
 
 import { Book, Author } from '../../models';
-import { AuthorComponent } from '../author/author.component';
 
 @Component({
   selector: 'app-book',

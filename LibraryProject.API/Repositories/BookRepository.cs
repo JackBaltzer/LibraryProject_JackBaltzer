@@ -27,12 +27,16 @@ namespace LibraryProject.API.Repositories
 
         public async Task<List<Book>> GetAll()
         {
-            return await _context.Book.Include(b => b.Author).ToListAsync();
+            return await _context.Book
+                .Include(b => b.Author)
+                .ToListAsync();
         }
 
         public async Task<Book> GetById(int bookId)
         {
-            return await _context.Book.Include(b => b.Author).FirstOrDefaultAsync(b => b.Id == bookId);
+            return await _context.Book
+                .Include(b => b.Author)
+                .FirstOrDefaultAsync(b => b.Id == bookId);
         }
 
         public async Task<Book> Create(Book book)
@@ -44,7 +48,9 @@ namespace LibraryProject.API.Repositories
 
         public async Task<Book> Update(int bookId, Book book)
         {
-            Book updateBook = await _context.Book.FirstOrDefaultAsync(b => b.Id == bookId);
+            Book updateBook = await _context.Book
+                .FirstOrDefaultAsync(b => b.Id == bookId);
+
             if (updateBook!= null)
             {
                 updateBook.Title= book.Title;
@@ -57,7 +63,9 @@ namespace LibraryProject.API.Repositories
 
         public async Task<Book> Delete(int bookId)
         {
-            Book book = await _context.Book.FirstOrDefaultAsync(b => b.Id == bookId);
+            Book book = await _context.Book
+                .FirstOrDefaultAsync(b => b.Id == bookId);
+
             if (book != null)
             {
                 _context.Book.Remove(book);
