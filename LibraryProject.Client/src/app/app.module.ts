@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FrontpageComponent } from './frontpage/frontpage.component';
 import { AuthorComponent } from './admin/author/author.component';
+import { BookComponent } from './admin/book/book.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FrontpageComponent,
-    AuthorComponent
+    AuthorComponent,
+    BookComponent
   ],
   imports: [
     BrowserModule,

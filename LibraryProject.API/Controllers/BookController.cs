@@ -11,13 +11,12 @@ namespace LibraryProject.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorController : ControllerBase
+    public class BookController : ControllerBase
     {
-        private readonly IAuthorService _authorService;
-
-        public AuthorController(IAuthorService authorService)
+        private readonly IBookService _bookService;
+        public BookController(IBookService bookService)
         {
-            _authorService = authorService;
+            _bookService = bookService;
         }
 
         [HttpGet]
@@ -28,19 +27,19 @@ namespace LibraryProject.API.Controllers
         {
             try
             {
-                List<AuthorResponse> authors = await _authorService.GetAllAuthors();
+                List<BookResponse> Books = await _bookService.GetAllBooks();
 
-                if (authors == null)
+                if (Books == null)
                 {
                     return Problem("Got no data, not even an empty list, this is unexpected");
                 }
 
-                if (authors.Count == 0)
+                if (Books.Count == 0)
                 {
                     return NoContent();
                 }
 
-                return Ok(authors);
+                return Ok(Books);
             }
             catch (Exception ex)
             {
@@ -48,23 +47,23 @@ namespace LibraryProject.API.Controllers
             }
         }
 
-        [HttpGet("{authorId}")]
+        [HttpGet("{bookId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetById([FromRoute] int authorId)
+        public async Task<IActionResult> GetById([FromRoute] int bookId)
         {
             try
             {
-                AuthorResponse author = await _authorService.GetById(authorId);
+                BookResponse book = await _bookService.GetById(bookId);
 
-                if (author == null)
+                if (book == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(author);
+                return Ok(book);
             }
             catch (Exception ex)
             {
@@ -76,18 +75,18 @@ namespace LibraryProject.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create([FromBody] NewAuthor newAuthor)
+        public async Task<IActionResult> Create([FromBody] NewBook newBook)
         {
             try
             {
-                AuthorResponse author = await _authorService.Create(newAuthor);
+                BookResponse book = await _bookService.Create(newBook);
 
-                if (author == null)
+                if (book == null)
                 {
-                    return Problem("Author was not created, something went wrong");
+                    return Problem("Book was not created, something went wrong");
                 }
 
-                return Ok(author);
+                return Ok(book);
             }
             catch (Exception ex)
             {
@@ -95,22 +94,22 @@ namespace LibraryProject.API.Controllers
             }
         }
 
-        [HttpPut("{authorId}")]
+        [HttpPut("{bookId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update([FromRoute] int authorId, [FromBody] UpdateAuthor updateAuthor)
+        public async Task<IActionResult> Update([FromRoute] int bookId, [FromBody] UpdateBook updateBook)
         {
             try
             {
-                AuthorResponse author = await _authorService.Update(authorId, updateAuthor);
+                BookResponse book = await _bookService.Update(bookId, updateBook);
 
-                if (author == null)
+                if (book == null)
                 {
-                    return Problem("Author was not updated, something went wrong");
+                    return Problem("Book was not updated, something went wrong");
                 }
 
-                return Ok(author);
+                return Ok(book);
             }
             catch (Exception ex)
             {
@@ -118,19 +117,19 @@ namespace LibraryProject.API.Controllers
             }
         }
 
-        [HttpDelete("{authorId}")]
+        [HttpDelete("{bookId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Delete([FromRoute] int authorId)
+        public async Task<IActionResult> Delete([FromRoute] int bookId)
         {
             try
             {
-                bool result = await _authorService.Delete(authorId);
+                bool result = await _bookService.Delete(bookId);
 
                 if (!result)
                 {
-                    return Problem("Author was not deleted, something went wrong");
+                    return Problem("Book was not deleted, something went wrong");
                 }
 
                 return NoContent();

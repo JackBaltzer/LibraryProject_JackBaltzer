@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+.right {
+  text-align: right;
+}
+
+label {
+  width: 120px;
+  display: inline-block;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 3px;
+}
+
+th {
+  background: #fff;
+}
+
+tr:hover {
+  background: #eee;
+}
