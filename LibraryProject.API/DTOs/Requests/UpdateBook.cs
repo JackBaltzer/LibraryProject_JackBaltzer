@@ -6,7 +6,6 @@ namespace LibraryProject.API.DTOs.Requests
     {
         [Required]
         [StringLength(32, ErrorMessage = "Title must be less than 32 chars")]
-        [MinLength(1, ErrorMessage = "Title must contain atleast 1 char")]
         public string Title { get; set; }
 
         [Required]

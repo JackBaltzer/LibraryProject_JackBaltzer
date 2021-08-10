@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Author } from '../models';
-import { AuthorService } from '../author.service';
+import { AuthorService } from '../_services/author.service';
 
 @Component({
   selector: 'app-frontpage',

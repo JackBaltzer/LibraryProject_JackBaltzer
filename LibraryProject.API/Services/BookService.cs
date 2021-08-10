@@ -16,6 +16,7 @@ namespace LibraryProject.API.Services
         Task<BookResponse> Update(int bookId, UpdateBook updateBook);
         Task<bool> Delete(int bookId);
     }
+
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
@@ -122,7 +123,7 @@ namespace LibraryProject.API.Services
         public async Task<bool> Delete(int bookId)
         {
             var result = await _bookRepository.Delete(bookId);
-           
+
             return result != null;
         }
     }

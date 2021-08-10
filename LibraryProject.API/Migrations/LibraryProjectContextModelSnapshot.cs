@@ -76,6 +76,8 @@ namespace LibraryProject.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuthorId");
+
                     b.ToTable("Book");
 
                     b.HasData(
@@ -107,6 +109,59 @@ namespace LibraryProject.API.Migrations
                             Pages = 544,
                             Title = "Babylons Ashes"
                         });
+                });
+
+            modelBuilder.Entity("LibraryProject.API.Database.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "albert@mail.dk",
+                            Password = "Test1234",
+                            Username = "Albert"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "benny@mail.dk",
+                            Password = "Test1234",
+                            Username = "Benny"
+                        });
+                });
+
+            modelBuilder.Entity("LibraryProject.API.Database.Entities.Book", b =>
+                {
+                    b.HasOne("LibraryProject.API.Database.Entities.Author", "Author")
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("LibraryProject.API.Database.Entities.Author", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }
