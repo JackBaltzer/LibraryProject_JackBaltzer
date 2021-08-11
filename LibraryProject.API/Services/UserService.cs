@@ -13,7 +13,8 @@ namespace LibraryProject.API.Services
     public interface IUserService
     {
         Task<AuthenticateResponse> Authenticate(AuthenticateRequest login);
-        Task<User> GetById(int userId);
+        Task<UserResponse> GetById(int userId);
+        Task<List<UserResponse>> GetAll();
         void Register(RegisterUser newUser);
         void Update(int userId, UpdateUser updateUser);
 
@@ -45,7 +46,8 @@ namespace LibraryProject.API.Services
                     Id = user.Id,
                     Email = user.Email,
                     Username = user.Username,
-                    JwtToken = _jwtUtils.GenerateToken(user)
+                    Role = user.Role,
+                    JwtToken = _jwtUtils.GenerateJwtToken(user)
                 };
                 return response;
             }
@@ -58,12 +60,24 @@ namespace LibraryProject.API.Services
             throw new NotImplementedException();
         }
 
-        public async Task<User> GetById(int userId)
+        public async Task<UserResponse> GetById(int userId)
         {
-            return await _userRepository.GetById(userId);
+            User user = await _userRepository.GetById(userId);
+            return user == null ? null : new UserResponse
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Username = user.Username,
+                Role = user.Role
+            };
         }
 
         public void Update(int userId, UpdateUser updateUser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<UserResponse>> GetAll()
         {
             throw new NotImplementedException();
         }

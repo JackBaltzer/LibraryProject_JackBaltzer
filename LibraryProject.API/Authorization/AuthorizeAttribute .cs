@@ -1,4 +1,6 @@
 ﻿using LibraryProject.API.Database.Entities;
+using LibraryProject.API.DTOs.Responses;
+using LibraryProject.API.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -26,7 +28,7 @@ namespace LibraryProject.API.Authorization
                 return;
 
             // authorization
-            var user = (User)context.HttpContext.Items["User"];
+            var user = (UserResponse)context.HttpContext.Items["User"];
             if (user == null || (_roles.Any() && !_roles.Contains(user.Role)))
             {
                 // not logged in or role not authorized

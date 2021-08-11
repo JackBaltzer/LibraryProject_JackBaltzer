@@ -124,6 +124,9 @@ namespace LibraryProject.API.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(32)");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(32)");
 
@@ -137,6 +140,7 @@ namespace LibraryProject.API.Migrations
                             Id = 1,
                             Email = "albert@mail.dk",
                             Password = "Test1234",
+                            Role = 0,
                             Username = "Albert"
                         },
                         new
@@ -144,6 +148,7 @@ namespace LibraryProject.API.Migrations
                             Id = 2,
                             Email = "benny@mail.dk",
                             Password = "Test1234",
+                            Role = 1,
                             Username = "Benny"
                         });
                 });

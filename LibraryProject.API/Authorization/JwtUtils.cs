@@ -14,8 +14,8 @@ namespace LibraryProject.API.Authorization
 {
     public interface IJwtUtils
     {
-        public string GenerateToken(User user);
-        public int? ValidateToken(string token);
+        public string GenerateJwtToken(User user);
+        public int? ValidateJwtToken(string token);
     }
 
     public class JwtUtils : IJwtUtils
@@ -27,7 +27,7 @@ namespace LibraryProject.API.Authorization
             _appSettings = appSettings.Value;
         }
 
-        public string GenerateToken(User user)
+        public string GenerateJwtToken(User user)
         {
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -36,15 +36,13 @@ namespace LibraryProject.API.Authorization
             {
                 Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key), 
-                    SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
 
-        public int? ValidateToken(string token)
+        public int? ValidateJwtToken(string token)
         {
             if (token == null)
                 return null;
@@ -69,7 +67,7 @@ namespace LibraryProject.API.Authorization
                 // return user id from JWT token if validation successful
                 return userId;
             }
-            catch
+            catch(Exception ex)
             {
                 // return null if validation fails
                 return null;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LibraryProject.API.Database.Entities
+namespace LibraryProject.API.Helpers
 {
     public enum Role
     {

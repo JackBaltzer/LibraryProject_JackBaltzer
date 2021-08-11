@@ -1,4 +1,5 @@
 ﻿using LibraryProject.API.Database.Entities;
+using LibraryProject.API.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryProject.API.Database
@@ -20,14 +21,16 @@ namespace LibraryProject.API.Database
                     Id = 1,
                     Username = "Albert",
                     Email = "albert@mail.dk",
-                    Password = "Test1234"
+                    Password = "Test1234",
+                    Role = Role.Admin
                 },
                 new User
                 {
                     Id = 2,
                     Username = "Benny",
                     Email = "benny@mail.dk",
-                    Password = "Test1234"
+                    Password = "Test1234",
+                    Role = Role.User
                 });
 
             modelBuilder.Entity<Author>().HasData(

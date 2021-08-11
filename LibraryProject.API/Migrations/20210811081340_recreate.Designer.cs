@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryProject.API.Migrations
 {
     [DbContext(typeof(LibraryProjectContext))]
-    [Migration("20210810114831_users")]
-    partial class users
+    [Migration("20210811081340_recreate")]
+    partial class recreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -126,6 +126,9 @@ namespace LibraryProject.API.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(32)");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(32)");
 
@@ -139,6 +142,7 @@ namespace LibraryProject.API.Migrations
                             Id = 1,
                             Email = "albert@mail.dk",
                             Password = "Test1234",
+                            Role = 0,
                             Username = "Albert"
                         },
                         new
@@ -146,6 +150,7 @@ namespace LibraryProject.API.Migrations
                             Id = 2,
                             Email = "benny@mail.dk",
                             Password = "Test1234",
+                            Role = 1,
                             Username = "Benny"
                         });
                 });

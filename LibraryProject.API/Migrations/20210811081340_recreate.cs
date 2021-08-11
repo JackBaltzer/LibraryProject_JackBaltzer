@@ -2,7 +2,7 @@
 
 namespace LibraryProject.API.Migrations
 {
-    public partial class users : Migration
+    public partial class recreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,8 @@ namespace LibraryProject.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(32)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(128)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(32)", nullable: true)
+                    Password = table.Column<string>(type: "nvarchar(32)", nullable: true),
+                    Role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,11 +69,11 @@ namespace LibraryProject.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "User",
-                columns: new[] { "Id", "Email", "Password", "Username" },
+                columns: new[] { "Id", "Email", "Password", "Role", "Username" },
                 values: new object[,]
                 {
-                    { 1, "albert@mail.dk", "Test1234", "Albert" },
-                    { 2, "benny@mail.dk", "Test1234", "Benny" }
+                    { 1, "albert@mail.dk", "Test1234", 0, "Albert" },
+                    { 2, "benny@mail.dk", "Test1234", 1, "Benny" }
                 });
 
             migrationBuilder.InsertData(

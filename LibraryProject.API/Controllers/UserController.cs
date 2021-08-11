@@ -1,4 +1,7 @@
-﻿using LibraryProject.API.DTOs.Requests;
+﻿using LibraryProject.API.Authorization;
+using LibraryProject.API.Database.Entities;
+using LibraryProject.API.DTOs.Requests;
+using LibraryProject.API.DTOs.Responses;
 using LibraryProject.API.Helpers;
 using LibraryProject.API.Services;
 using Microsoft.AspNetCore.Http;
@@ -11,25 +14,25 @@ using System.Threading.Tasks;
 
 namespace LibraryProject.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly AppSettings _appSettings;
 
-        public UserController(IUserService userService, IOptions<AppSettings> appSettings)
+
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _appSettings = appSettings.Value;
         }
 
+        [AllowAnonymous]
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(AuthenticateRequest login)
         {
             try
             {
-
                 var response = await _userService.Authenticate(login);
                 if(response == null)
                 {
@@ -44,6 +47,24 @@ namespace LibraryProject.API.Controllers
 
         }
 
+        [Authorize(Role.Admin)]
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var users = await _userService.GetAll();
+            return Ok(users);
+        }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            // only admins can access other user records
+            var currentUser = (UserResponse)HttpContext.Items["User"];
+            if (id != currentUser.Id && currentUser.Role != Role.Admin)
+                return Unauthorized(new { message = "Unauthorized" });
+
+            var user = await _userService.GetById(id);
+            return Ok(user);
+        }
     }
 }
