@@ -13,3 +13,10 @@ export interface Book {
   authorId: number;
   author?: Author;
 }
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  token?: string;
+}
