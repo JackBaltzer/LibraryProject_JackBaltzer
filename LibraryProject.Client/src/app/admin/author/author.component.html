@@ -20,6 +20,7 @@
   <tr>
     <th>Actions</th>
     <th>Fornavn</th>
+    <th>Mellemnavn</th>
     <th>Efternavn</th>
   </tr>
   <tr *ngFor="let author of authors">
@@ -28,6 +29,7 @@
       <button (click)="delete(author)">Slet</button>
     </td>
     <td>{{author.firstName}}</td>
+    <td>{{author.middleName}}</td>
     <td>{{author.lastName}}</td>
   </tr>
 </table>

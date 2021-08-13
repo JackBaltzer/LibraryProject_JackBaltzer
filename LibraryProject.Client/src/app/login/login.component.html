@@ -1,1 +1,5 @@
-<p>login works!</p>
+<p>Login</p>
+Email:<input [(ngModel)]="email">
+Kodeord: <input type="password" [(ngModel)]="password">
+<button (click)="login()">Login</button>
+{{ error }}

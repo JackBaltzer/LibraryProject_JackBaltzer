@@ -47,7 +47,7 @@ namespace LibraryProject.API.Services
                     Email = user.Email,
                     Username = user.Username,
                     Role = user.Role,
-                    JwtToken = _jwtUtils.GenerateJwtToken(user)
+                    Token = _jwtUtils.GenerateJwtToken(user)
                 };
                 return response;
             }

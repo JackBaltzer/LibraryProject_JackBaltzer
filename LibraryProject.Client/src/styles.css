@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-
+body {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
 .right {
   text-align: right;
@@ -25,4 +27,21 @@ th {
 
 tr:hover {
   background: #eee;
+}
+
+
+a {
+  padding:2px 5px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #000 !important;
+  text-decoration: none;
+}
+
+
+a.active-link {
+  background-color: #fcc;
 }

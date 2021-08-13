@@ -1,5 +1,7 @@
-﻿using LibraryProject.API.DTOs.Requests;
+﻿using LibraryProject.API.Authorization;
+using LibraryProject.API.DTOs.Requests;
 using LibraryProject.API.DTOs.Responses;
+using LibraryProject.API.Helpers;
 using LibraryProject.API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -71,6 +73,7 @@ namespace LibraryProject.API.Controllers
             }
         }
 
+        [Authorize(Role.Admin)]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -94,6 +97,7 @@ namespace LibraryProject.API.Controllers
             }
         }
 
+        [Authorize(Role.Admin)]
         [HttpPut("{bookId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -117,6 +121,7 @@ namespace LibraryProject.API.Controllers
             }
         }
 
+        [Authorize(Role.Admin)]
         [HttpDelete("{bookId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

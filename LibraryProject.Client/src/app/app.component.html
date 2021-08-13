@@ -1,7 +1,10 @@
 <nav>
-  <a routerLink="/">Home</a>
-  <a routerLink="/admin/authors">Forfattere</a>
-  <a routerLink="/admin/books">Bøger</a>
+  <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+    true}" >Home</a>
+  <a routerLink="/admin/authors" routerLinkActive="active-link"  *ngIf="currentUser != null">Forfattere</a>
+  <a routerLink="/admin/books" routerLinkActive="active-link" *ngIf="currentUser != null ">Bøger</a>
+  <a routerLink="/login" routerLinkActive="active-link" *ngIf="currentUser == null">Login</a>
+  <a (click)="logout()" *ngIf="currentUser != null">Logout</a>
 </nav>
 
 <router-outlet></router-outlet>
