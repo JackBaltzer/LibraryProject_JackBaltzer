@@ -20,6 +20,6 @@ namespace LibraryProject.API.Database.Entities
         [Column(TypeName = "nvarchar(32)")]
         public string MiddleName { get; set; }
 
-        public List<Book> Books { get; set; }
+        public List<Book> Books { get; set; } = new();
     }
 }

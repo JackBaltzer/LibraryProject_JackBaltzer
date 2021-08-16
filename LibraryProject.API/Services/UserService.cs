@@ -3,7 +3,6 @@ using LibraryProject.API.Database.Entities;
 using LibraryProject.API.DTOs.Requests;
 using LibraryProject.API.DTOs.Responses;
 using LibraryProject.API.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,13 +11,13 @@ namespace LibraryProject.API.Services
 {
     public interface IUserService
     {
-        Task<AuthenticateResponse> Authenticate(AuthenticateRequest login);
-        Task<UserResponse> GetById(int userId);
         Task<List<UserResponse>> GetAll();
-        void Register(RegisterUser newUser);
-        void Update(int userId, UpdateUser updateUser);
-
+        Task<UserResponse> GetById(int userId);
+        Task<LoginResponse> Authenticate(LoginRequest login);
+        Task<UserResponse> Register(RegisterUser newUser);
+        Task<UserResponse> Update(int userId, UpdateUser updateUser);
     }
+
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
@@ -30,18 +29,37 @@ namespace LibraryProject.API.Services
             _jwtUtils = jwtUtils;
         }
 
-        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest login)
+        public async Task<List<UserResponse>> GetAll()
+        {
+            List<User> users = await _userRepository.GetAll();
+
+            return users == null ? null : users.Select(u => new UserResponse
+            {
+                Id = u.Id,
+                Email = u.Email,
+                Role = u.Role,
+                Username = u.Username
+            }).ToList();
+        }
+
+        public async Task<UserResponse> GetById(int userId)
+        {
+            User user = await _userRepository.GetById(userId);
+            return userResponse(user);
+        }
+
+        public async Task<LoginResponse> Authenticate(LoginRequest login)
         {
 
             User user = await _userRepository.GetByEmail(login.Email);
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
 
-            if(user.Password == login.Password)
+            if (user.Password == login.Password)
             {
-                AuthenticateResponse response = new AuthenticateResponse
+                LoginResponse response = new LoginResponse
                 {
                     Id = user.Id,
                     Email = user.Email,
@@ -55,14 +73,38 @@ namespace LibraryProject.API.Services
             return null;
         }
 
-        public void Register(RegisterUser newUser)
+        public async Task<UserResponse> Register(RegisterUser newUser)
         {
-            throw new NotImplementedException();
+            User user = new User
+            {
+                Email = newUser.Email,
+                Username = newUser.Username,
+                Password = newUser.Password,
+                Role = Helpers.Role.User // force all users created through Register, to Role.User
+            };
+
+            user = await _userRepository.Create(user);
+
+            return userResponse(user);
         }
 
-        public async Task<UserResponse> GetById(int userId)
+        public async Task<UserResponse> Update(int userId, UpdateUser updateUser)
         {
-            User user = await _userRepository.GetById(userId);
+            User user = new User
+            {
+                Email = updateUser.Email,
+                Username = updateUser.Username,
+                Password = updateUser.Password,
+                Role = updateUser.Role
+            };
+
+            user = await _userRepository.Update(userId, user);
+
+            return userResponse(user);
+        }
+
+        private UserResponse userResponse(User user)
+        {
             return user == null ? null : new UserResponse
             {
                 Id = user.Id,
@@ -70,16 +112,6 @@ namespace LibraryProject.API.Services
                 Username = user.Username,
                 Role = user.Role
             };
-        }
-
-        public void Update(int userId, UpdateUser updateUser)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<UserResponse>> GetAll()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -3,7 +3,7 @@ using LibraryProject.API.Helpers;
 
 namespace LibraryProject.API.DTOs.Responses
 {
-    public class AuthenticateResponse
+    public class LoginResponse
     {
         public int Id { get; set; }
         public string Username { get; set; }

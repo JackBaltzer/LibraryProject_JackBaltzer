@@ -1,12 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { Book } from '../models';
+import { environment } from '../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  apiUrl = 'https://localhost:5001/api/book';
+  apiUrl = environment.apiUrl + '/book';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

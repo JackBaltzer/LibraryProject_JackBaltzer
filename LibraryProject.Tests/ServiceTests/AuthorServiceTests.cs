@@ -7,7 +7,7 @@ using Moq;
 using System.Collections.Generic;
 using Xunit;
 
-namespace LibraryProject.Tests
+namespace LibraryProject.Tests.ServiceTests
 {
     public class AuthorServiceTests
     {
@@ -58,7 +58,7 @@ namespace LibraryProject.Tests
         {
             // Arrange
             List<Author> Authors = new List<Author>();
-            
+
             _authorRepository
                 .Setup(a => a.GetAll())
                 .ReturnsAsync(Authors);

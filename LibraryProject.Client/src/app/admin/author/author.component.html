@@ -23,13 +23,13 @@
     <th>Mellemnavn</th>
     <th>Efternavn</th>
   </tr>
-  <tr *ngFor="let author of authors">
+  <tr *ngFor="let _author of authors" [ngClass]="{'active':_author.id == author.id }">
     <td>
-      <button (click)="edit(author)">Ret</button>
-      <button (click)="delete(author)">Slet</button>
+      <button (click)="edit(_author)">Ret</button>
+      <button (click)="delete(_author)">Slet</button>
     </td>
-    <td>{{author.firstName}}</td>
-    <td>{{author.middleName}}</td>
-    <td>{{author.lastName}}</td>
+    <td>{{ _author.firstName }}</td>
+    <td>{{ _author.middleName }}</td>
+    <td>{{ _author.lastName }}</td>
   </tr>
 </table>

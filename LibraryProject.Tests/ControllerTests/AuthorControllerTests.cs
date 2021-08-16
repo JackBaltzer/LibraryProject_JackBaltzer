@@ -7,7 +7,7 @@ using Moq;
 using System.Collections.Generic;
 using Xunit;
 
-namespace LibraryProject.Tests
+namespace LibraryProject.Tests.ControllerTests
 {
     public class AuthorControllerTests
     {

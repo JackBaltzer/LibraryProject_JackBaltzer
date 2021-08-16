@@ -11,6 +11,7 @@ namespace LibraryProject.API.Repositories
 {
     public interface IUserRepository
     {
+        Task<List<User>> GetAll();
         Task<User> Create(User user);
         Task<User> GetByEmail(string email);
         Task<User> GetById(int userId);
@@ -24,6 +25,11 @@ namespace LibraryProject.API.Repositories
         public UserRepository(LibraryProjectContext context)
         {
             _context = context;
+        }
+
+        public async Task<List<User>> GetAll()
+        {
+            return await _context.User.ToListAsync();
         }
 
         public async Task<User> Create(User user)
@@ -46,21 +52,18 @@ namespace LibraryProject.API.Repositories
 
         public async Task<User> GetById(int userId)
         {
-            return await _context.User
-                .FirstOrDefaultAsync(u => u.Id == userId);
+            return await _context.User.FirstOrDefaultAsync(u => u.Id == userId);
         }
 
         public async Task<User> GetByEmail(string Email)
         {
-            return await _context.User
-                .FirstOrDefaultAsync(u => u.Email == Email);
+            return await _context.User.FirstOrDefaultAsync(u => u.Email == Email);
         }
 
 
         public async Task<User> Update(int userId, User user)
         {
-            User updateUser = await _context.User
-                .FirstOrDefaultAsync(u => u.Id == userId);
+            User updateUser = await _context.User.FirstOrDefaultAsync(u => u.Id == userId);
 
             if(updateUser != null)
             {

@@ -1,15 +1,12 @@
 ﻿using LibraryProject.API.Authorization;
-using LibraryProject.API.Database.Entities;
 using LibraryProject.API.DTOs.Requests;
 using LibraryProject.API.DTOs.Responses;
 using LibraryProject.API.Helpers;
 using LibraryProject.API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace LibraryProject.API.Controllers
@@ -29,42 +26,105 @@ namespace LibraryProject.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate(AuthenticateRequest login)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Authenticate(LoginRequest login)
         {
             try
             {
-                var response = await _userService.Authenticate(login);
-                if(response == null)
+                LoginResponse response = await _userService.Authenticate(login);
+
+                if (response == null)
                 {
                     return Unauthorized();
                 }
+
                 return Ok(response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Problem(ex.Message);
             }
-
         }
 
-        [Authorize(Role.Admin)]
+        [AllowAnonymous]
+        [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Register([FromBody] RegisterUser newUser)
+        {
+            try
+            {
+
+                UserResponse user = await _userService.Register(newUser);
+                return Ok(user);
+
+            }catch(Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [Authorize(Role.Admin)] // only admins are allowed entry to this endpoint
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll()
         {
-            var users = await _userService.GetAll();
-            return Ok(users);
+            try
+            {
+                List<UserResponse> users = await _userService.GetAll();
+
+                if (users == null)
+                {
+                    return Problem("Got no data, not even an empty list, this is unexpected");
+                }
+
+                if (users.Count == 0)
+                {
+                    return NoContent();
+                }
+
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        [Authorize(Role.User, Role.Admin)]
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetById([FromRoute] int userId)
         {
-            // only admins can access other user records
-            var currentUser = (UserResponse)HttpContext.Items["User"];
-            if (id != currentUser.Id && currentUser.Role != Role.Admin)
-                return Unauthorized(new { message = "Unauthorized" });
+            try
+            {
+                // only admins can access other user records
+                var currentUser = (UserResponse)HttpContext.Items["User"];
+                if (userId != currentUser.Id && currentUser.Role != Role.Admin)
+                {
+                    return Unauthorized(new { message = "Unauthorized" });
+                }
 
-            var user = await _userService.GetById(id);
-            return Ok(user);
+                UserResponse user = await _userService.GetById(userId);
+
+                if (user == null)
+                {
+                    return NoContent();
+                }
+
+                return Ok(user);
+
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
     }
 }

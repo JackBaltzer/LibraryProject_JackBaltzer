@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LibraryProject.API.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace LibraryProject.API.DTOs.Requests
 {
@@ -14,5 +15,8 @@ namespace LibraryProject.API.DTOs.Requests
 
         [StringLength(32, ErrorMessage = "Username must be less than 32 chars")]
         public string Password { get; set; }
+
+        [Required]
+        public Role Role { get; set; }
     }
 }

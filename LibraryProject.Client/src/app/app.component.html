@@ -1,10 +1,14 @@
 <nav>
-  <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
-    true}" >Home</a>
-  <a routerLink="/admin/authors" routerLinkActive="active-link"  *ngIf="currentUser != null">Forfattere</a>
-  <a routerLink="/admin/books" routerLinkActive="active-link" *ngIf="currentUser != null ">Bøger</a>
+  <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Home</a>
+  <div style="display:inline-block" *ngIf="currentUser != null" >
+    <a routerLink="/profile" routerLinkActive="active-link">Profil</a>
+    <div style="display:inline-block" *ngIf="currentUser != null && currentUser.role == 'Admin'"  >
+      <a routerLink="/admin/authors" routerLinkActive="active-link">Forfattere</a>
+      <a routerLink="/admin/books" routerLinkActive="active-link">Bøger</a>
+    </div>
+    <a (click)="logout()">Logout</a>
+  </div>
   <a routerLink="/login" routerLinkActive="active-link" *ngIf="currentUser == null">Login</a>
-  <a (click)="logout()" *ngIf="currentUser != null">Logout</a>
 </nav>
 
 <router-outlet></router-outlet>

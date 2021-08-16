@@ -1,7 +1,5 @@
-import { ReturnStatement, ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '../_services/authentication.service';
 
@@ -9,7 +7,6 @@ import { AuthenticationService } from '../_services/authentication.service';
 export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
-  loading = false;
   submitted = false;
   error = '';
 
@@ -19,7 +16,8 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService
   ) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
+    // console.log(this.authenticationService.currentUserValue);
+    if (this.authenticationService.currentUserValue != null && this.authenticationService.currentUserValue.id > 0) {
       this.router.navigate(['/']);
     }
   }
@@ -30,27 +28,22 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.error = '';
-    this.loading = true;
     this.authenticationService.login(this.email, this.password)
       .subscribe({
-        next: (r) => {
-          // console.log('login next', r);
+        next: () => {
           // // get return url from route parameters or default to '/'
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigate([returnUrl]);
         },
-        error: error => {
-          console.log('login error ', error);
-          if (error == 'Unauthorized' || error == 'Bad Request') {
-
+        error: obj => {
+          // console.log('login error ', obj.error);
+          if (obj.error.status == 400 || obj.error.status == 401 || obj.error.status == 500) {
             this.error = 'Forkert brugernavn eller kodeord';
           }
           else {
-            this.error = error;
+            this.error = obj.error.title;
           }
-          this.loading = false;
         }
       });
   }
-
 }

@@ -1,9 +1,11 @@
-<p>Forside</p>
+<h1>Forside</h1>
 
 <div *ngFor="let author of authors">
   <h2>{{ author.firstName }} {{ author.middleName }} {{ author.lastName }}</h2>
-  <p>Har skrevet  {{ author.books.length }} bøger</p>
+  <p>Har {{ author.books.length }} {{ author.books.length == 1 ? 'bog' : 'bøger'}} i systemet</p>
   <ul>
     <li *ngFor="let book of author.books">{{ book.title}}</li>
   </ul>
 </div>
+
+<img src="/assets/Pulse-1s-200px.svg" *ngIf="authors.length == 0">

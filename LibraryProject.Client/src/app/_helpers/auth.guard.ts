@@ -12,19 +12,17 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
-    console.log('auth.guard.ts', currentUser);
     if (currentUser) {
+      // send the user to login page, if requested endpoint has roles which user does not have
       if (route.data.roles && route.data.roles.indexOf(currentUser.role) === -1) {
-        this.authenticationService.logout();
-        location.reload();
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
         return false;
       }
-      // logged in so return true
+      // current user exists, meaning user logged in, so return true
       return true;
     }
 
-    // not logged in so redirect to login page with the return url
+    // in general, if not currently logged in, redirect to login page with the return url
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
     return false;
   }
