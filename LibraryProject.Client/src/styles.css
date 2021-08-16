@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-
+body {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
 .right {
   text-align: right;
@@ -23,6 +25,67 @@ th {
   background: #fff;
 }
 
+tr {
+  border-left: solid 5px #fff;
+}
+
 tr:hover {
   background: #eee;
+}
+
+nav a {
+  margin: 0px 5px;
+  color: #ff0000;
+}
+
+a {
+  padding: 2px 5px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+a:focus,
+button:focus,
+input:focus,
+:focus {
+  outline: none;
+}
+
+select,
+input {
+  cursor: pointer;
+  margin: 2px;
+  padding: 3px 5px;
+  width: 150px;
+  border-radius: 3px;
+  border: solid 1px #900;
+}
+
+input:focus,
+button:focus {
+  box-shadow: 0px 0px 5px #900;
+}
+
+a:hover,
+button:hover {
+  cursor: pointer;
+  color: #000 !important;
+  text-decoration: none;
+}
+
+a.active-link {
+  background-color: #fcc;
+}
+
+
+button {
+  color: #f00;
+  background: #fff;
+  border: solid 1px #fcc;
+  margin: 3px;
+}
+
+.active {
+  border-left: solid 5px #900;
+  background: #eee !important;
 }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace LibraryProject.Tests
+namespace LibraryProject.Tests.RepositoryTests
 {
     public class AuthorRepositoryTests
     {

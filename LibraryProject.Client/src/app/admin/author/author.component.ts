@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AuthorService } from 'src/app/author.service';
-import { Author } from 'src/app/models';
+import { AuthorService } from '../../_services/author.service';
+import { Author } from '../../models';
 
 @Component({
   selector: 'app-author',
@@ -53,12 +53,14 @@ export class AuthorComponent implements OnInit {
 
   save(): void {
     this.message = [];
+
     if (this.author.firstName == '') {
       this.message.push('Udfyld Fornavn');
     }
     if (this.author.lastName == '') {
       this.message.push('Udfyld Efternavn');
     }
+
     if (this.message.length == 0) {
       if (this.author.id == 0) {
         this.authorService.addAuthor(this.author)

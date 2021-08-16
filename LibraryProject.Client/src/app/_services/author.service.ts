@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { Author } from './models';
+import { Author } from '../models';
+
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorService {
 
-  apiUrl = 'https://localhost:5001/api/author';
+  apiUrl = environment.apiUrl + '/author';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

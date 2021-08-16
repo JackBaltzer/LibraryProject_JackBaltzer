@@ -1,4 +1,5 @@
 ﻿using LibraryProject.API.Database.Entities;
+using LibraryProject.API.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryProject.API.Database
@@ -10,9 +11,28 @@ namespace LibraryProject.API.Database
 
         public DbSet<Author> Author { get; set; }
         public DbSet<Book> Book { get; set; }
+        public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    Username = "Albert",
+                    Email = "albert@mail.dk",
+                    Password = "Test1234",
+                    Role = Role.Admin
+                },
+                new User
+                {
+                    Id = 2,
+                    Username = "Benny",
+                    Email = "benny@mail.dk",
+                    Password = "Test1234",
+                    Role = Role.User
+                });
+
             modelBuilder.Entity<Author>().HasData(
                 new Author
                 {
@@ -50,7 +70,8 @@ namespace LibraryProject.API.Database
                     Title = "Leviathan Wakes",
                     Pages = 577,
                     AuthorId = 2,
-                }, new Book
+                },
+                new Book
                 {
                     Id = 4,
                     Title = "Babylons Ashes",

@@ -26,12 +26,12 @@
     <th>Titel</th>
     <th>Sideantal</th>
   </tr>
-  <tr *ngFor="let book of books">
+  <tr *ngFor="let _book of books" [ngClass]="{'active':_book.id == book.id }">
     <td>
-      <button (click)="edit(book)">Ret</button>
-      <button (click)="delete(book)">Slet</button>
+      <button (click)="edit(_book)">Ret</button>
+      <button (click)="delete(_book)">Slet</button>
     </td>
-    <td>{{ book.title }}</td>
-    <td class="right">{{ book.pages }}</td>
+    <td>{{ _book.title }}</td>
+    <td class="right">{{ _book.pages }}</td>
   </tr>
 </table>
