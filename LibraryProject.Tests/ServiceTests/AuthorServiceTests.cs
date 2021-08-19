@@ -23,8 +23,8 @@ namespace LibraryProject.Tests.ServiceTests
         public async void GetAll_ShouldReturnListOfAuthorResponses_WhenAuthorsExist()
         {
             // Arrange
-            List<Author> Authors = new List<Author>();
-            Authors.Add(new Author
+            List<Author> authors = new();
+            authors.Add(new Author
             {
                 Id = 1,
                 FirstName = "George",
@@ -32,7 +32,7 @@ namespace LibraryProject.Tests.ServiceTests
                 MiddleName = "R.R."
             });
 
-            Authors.Add(new Author
+            authors.Add(new Author
             {
                 Id = 2,
                 FirstName = "James",
@@ -42,7 +42,7 @@ namespace LibraryProject.Tests.ServiceTests
 
             _authorRepository
                 .Setup(a => a.GetAll())
-                .ReturnsAsync(Authors);
+                .ReturnsAsync(authors);
 
             // Act
             var result = await _sut.GetAllAuthors();
@@ -57,11 +57,11 @@ namespace LibraryProject.Tests.ServiceTests
         public async void GetAll_ShouldReturnEmptyListOfAuthorResponses_WhenNoAuthorsExists()
         {
             // Arrange
-            List<Author> Authors = new List<Author>();
+            List<Author> authors = new();
 
             _authorRepository
                 .Setup(a => a.GetAll())
-                .ReturnsAsync(Authors);
+                .ReturnsAsync(authors);
 
             // Act
             var result = await _sut.GetAllAuthors();

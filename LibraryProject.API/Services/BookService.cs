@@ -76,21 +76,25 @@ namespace LibraryProject.API.Services
             };
 
             book = await _bookRepository.Create(book);
-            Author author = await _authorRepository.GetById(book.AuthorId);
-
-            return book == null ? null : new BookResponse
+            if (book != null)
             {
-                Id = book.Id,
-                Title = book.Title,
-                Pages = book.Pages,
-                Author = new BookAuthorResponse
+                Author author = await _authorRepository.GetById(book.AuthorId);
+                return new BookResponse
                 {
-                    Id = author.Id,
-                    FirstName = author.FirstName,
-                    LastName = author.LastName,
-                    MiddleName = author.MiddleName
-                }
-            };
+                    Id = book.Id,
+                    Title = book.Title,
+                    Pages = book.Pages,
+                    Author = new BookAuthorResponse
+                    {
+                        Id = author.Id,
+                        FirstName = author.FirstName,
+                        MiddleName = author.MiddleName,
+                        LastName = author.LastName
+                    }
+                };
+            }
+
+            return null;
         }
 
         public async Task<BookResponse> Update(int bookId, UpdateBook updateBook)
@@ -103,21 +107,25 @@ namespace LibraryProject.API.Services
             };
 
             book = await _bookRepository.Update(bookId, book);
-            Author author = await _authorRepository.GetById(book.AuthorId);
-
-            return book == null ? null : new BookResponse
+            if (book != null)
             {
-                Id = book.Id,
-                Title = book.Title,
-                Pages = book.Pages,
-                Author = new BookAuthorResponse
+                Author author = await _authorRepository.GetById(book.AuthorId);
+                return new BookResponse
                 {
-                    Id = author.Id,
-                    FirstName = author.FirstName,
-                    MiddleName = author.MiddleName,
-                    LastName = author.LastName
-                }
-            };
+                    Id = book.Id,
+                    Title = book.Title,
+                    Pages = book.Pages,
+                    Author = new BookAuthorResponse
+                    {
+                        Id = author.Id,
+                        FirstName = author.FirstName,
+                        MiddleName = author.MiddleName,
+                        LastName = author.LastName
+                    }
+                };
+            }
+
+            return null;
         }
 
         public async Task<bool> Delete(int bookId)

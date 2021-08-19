@@ -18,7 +18,7 @@ namespace LibraryProject.Tests.RepositoryTests
         public AuthorRepositoryTests()
         {
             _options = new DbContextOptionsBuilder<LibraryProjectContext>()
-                .UseInMemoryDatabase(databaseName: "LibraryProject")
+                .UseInMemoryDatabase(databaseName: "LibraryProjectAuthors")
                 .Options;
 
             _context = new LibraryProjectContext(_options);
