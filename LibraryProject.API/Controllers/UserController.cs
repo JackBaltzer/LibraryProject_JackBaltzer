@@ -18,7 +18,6 @@ namespace LibraryProject.API.Controllers
     {
         private readonly IUserService _userService;
 
-
         public UserController(IUserService userService)
         {
             _userService = userService;
@@ -62,7 +61,8 @@ namespace LibraryProject.API.Controllers
                 UserResponse user = await _userService.Register(newUser);
                 return Ok(user);
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return Problem(ex.Message);
             }
@@ -100,6 +100,11 @@ namespace LibraryProject.API.Controllers
 
         [Authorize(Role.User, Role.Admin)]
         [HttpGet("{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById([FromRoute] int userId)
         {
             try
@@ -119,7 +124,6 @@ namespace LibraryProject.API.Controllers
                 }
 
                 return Ok(user);
-
             }
             catch (Exception ex)
             {
