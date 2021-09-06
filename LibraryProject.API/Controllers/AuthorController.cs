@@ -30,7 +30,7 @@ namespace LibraryProject.API.Controllers
         {
             try
             {
-                // this is a comment
+                // this is another comment from another branch
                 List<AuthorResponse> authors = await _authorService.GetAllAuthors();
 
                 if (authors == null)
