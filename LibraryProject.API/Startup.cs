@@ -34,7 +34,7 @@ namespace LibraryProject.API
                 options.AddPolicy(name: CORSRules,
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200")
+                        builder.WithOrigins("http://localhost:4200","http://127.0.0.1:5500")
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                     });

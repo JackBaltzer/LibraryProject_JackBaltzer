@@ -23,9 +23,9 @@ namespace LibraryProject.Tests.ControllerTests
         public async void GetAll_ShouldReturnStatusCode200_WhenDataExists()
         {
             // Arrange
-            List<AuthorResponse> Authors = new();
+            List<AuthorResponse> authors = new();
 
-            Authors.Add(new AuthorResponse
+            authors.Add(new AuthorResponse
             {
                 Id = 1,
                 FirstName = "George",
@@ -33,7 +33,7 @@ namespace LibraryProject.Tests.ControllerTests
                 MiddleName = "R.R."
             });
 
-            Authors.Add(new AuthorResponse
+            authors.Add(new AuthorResponse
             {
                 Id = 2,
                 FirstName = "James",
@@ -43,7 +43,7 @@ namespace LibraryProject.Tests.ControllerTests
 
             _authorService
                 .Setup(s => s.GetAllAuthors())
-                .ReturnsAsync(Authors);
+                .ReturnsAsync(authors);
 
             // Act
             var result = await _sut.GetAll();
@@ -57,11 +57,11 @@ namespace LibraryProject.Tests.ControllerTests
         public async void GetAll_ShouldReturnStatusCode204_WhenNoElementsExists()
         {
             // Arrange
-            List<AuthorResponse> Authors = new();
+            List<AuthorResponse> authors = new();
 
             _authorService
                 .Setup(s => s.GetAllAuthors())
-                .ReturnsAsync(Authors);
+                .ReturnsAsync(authors);
 
             // Act
             var result = await _sut.GetAll();
@@ -108,7 +108,7 @@ namespace LibraryProject.Tests.ControllerTests
         {
             // Arrange
             int authorId = 1;
-            AuthorResponse Author = new AuthorResponse
+            AuthorResponse author = new AuthorResponse
             {
                 Id = authorId,
                 FirstName = "George",
@@ -118,7 +118,7 @@ namespace LibraryProject.Tests.ControllerTests
 
             _authorService
                 .Setup(s => s.GetById(It.IsAny<int>()))
-                .ReturnsAsync(Author);
+                .ReturnsAsync(author);
 
             // Act
             var result = await _sut.GetById(authorId);

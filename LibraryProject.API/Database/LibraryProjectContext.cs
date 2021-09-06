@@ -55,28 +55,28 @@ namespace LibraryProject.API.Database
                     Id = 1,
                     Title = "A Game of Thrones",
                     Pages = 694,
-                    AuthorId = 1,
+                    AuthorId = 1
                 },
                 new Book
                 {
                     Id = 2,
                     Title = "A Clash of Kings",
                     Pages = 708,
-                    AuthorId = 1,
+                    AuthorId = 1
                 },
                 new Book
                 {
                     Id = 3,
                     Title = "Leviathan Wakes",
                     Pages = 577,
-                    AuthorId = 2,
+                    AuthorId = 2
                 },
                 new Book
                 {
                     Id = 4,
                     Title = "Babylons Ashes",
                     Pages = 544,
-                    AuthorId = 2,
+                    AuthorId = 2
                 }
             );
         }
