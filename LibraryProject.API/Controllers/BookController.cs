@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace LibraryProject.API.Controllers
@@ -73,8 +76,8 @@ namespace LibraryProject.API.Controllers
             }
         }
 
-        [Authorize(Role.Admin)]
-        [HttpPost]
+        //[Authorize(Role.Admin)]
+        [HttpPost, DisableRequestSizeLimit]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -83,6 +86,27 @@ namespace LibraryProject.API.Controllers
         {
             try
             {
+                if(Request.Form.Files != null && Request.Form.Files.Count > 0)
+                {
+                    //var file = Request.Form.Files[0];
+                    var formCollection = await Request.ReadFormAsync();
+                    var file = formCollection.Files.First();
+
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    // where to save physical image file
+                    var folderName = Path.Combine("../", "../","LibraryProject.Client", "src", "app", "assets","images");
+                    // OS safe pointer to folder
+                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    // the actual name we want to save in the db
+                    var dbPath = Path.Combine(folderName, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                        newBook.Image = dbPath;
+                    }
+
+                }
                 BookResponse book = await _bookService.Create(newBook);
 
                 if (book == null)
