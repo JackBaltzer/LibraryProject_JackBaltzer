@@ -1,24 +1,31 @@
 <h1>Bog Administration</h1>
+<form>
 
-<div>
-  <label>Titel</label>
-  <input [(ngModel)]="book.title">
-</div>
-<div>
-  <label>Sideantal</label>
-  <input type="number" [(ngModel)]="book.pages">
-</div>
-<div>
-  <label>Forfatter</label>
-  <select [(ngModel)]="book.authorId">
-    <option [value]="0" selected disabled>Vælg Forfatter</option>
-    <option *ngFor="let author of authors" [value]="author.id">{{ author.firstName}}
-      {{ author.middleName}} {{ author.lastName}}</option>
-  </select>
-</div>
-<button (click)="save()">Gem</button>
-<button (click)="cancel()">Annuller</button>
-<span>{{ message }}</span>
+  <div>
+    <label>Titel</label>
+    <input #title name="title" [value]="book.title">
+  </div>
+  <div>
+    <label>Sideantal</label>
+    <input #pages type="number" name="pages" [value]="book.pages">
+  </div>
+  <div>
+    <label>Billede</label>
+    <input #imageFile type="file" name="image" >
+  </div>
+  <div>
+    <label>Forfatter</label>
+    <select name="authorId" [value]="book.authorId">
+      <option [value]="0" selected disabled>Vælg Forfatter</option>
+      <option *ngFor="let author of authors" [value]="author.id">{{ author.firstName}}
+        {{ author.middleName}} {{ author.lastName}}</option>
+    </select>
+  </div>
+  <button (click)="save()">Gem</button>
+  <button (click)="cancel()">Annuller</button>
+  <span>{{ message }}</span>
+</form>
+
 
 <table>
   <tr>

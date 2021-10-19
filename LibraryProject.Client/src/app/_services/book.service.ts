@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -29,6 +29,8 @@ export class BookService {
   addBook(book: Book): Observable<Book> {
     return this.http.post<Book>(this.apiUrl, book, this.httpOptions);
   }
+
+
 
   updateBook(bookId: number, book: Book): Observable<Book> {
     return this.http.put<Book>(`${this.apiUrl}/${bookId}`, book, this.httpOptions);

@@ -3,6 +3,10 @@ import { AuthorService } from '../../_services/author.service';
 import { BookService } from '../../_services/book.service';
 
 import { Book, Author } from '../../models';
+import { FormGroup } from '@angular/forms';
+import { ThrowStmt } from '@angular/compiler';
+import { HttpClient } from '@angular/common/http';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'app-book',
@@ -10,7 +14,7 @@ import { Book, Author } from '../../models';
   styleUrls: ['./book.component.css']
 })
 export class BookComponent implements OnInit {
-
+  bookForm!: FormGroup; // ReactiveFormsModule
   books: Book[] = [];
   book: Book = this.newBook();
   message: string[] = [];
@@ -18,7 +22,8 @@ export class BookComponent implements OnInit {
 
   constructor(
     private bookService: BookService,
-    private authorService: AuthorService
+    private authorService: AuthorService,
+    private http:HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -62,6 +67,8 @@ export class BookComponent implements OnInit {
   }
 
   save(): void {
+
+    
     this.message = [];
     if (this.book.title == '') {
       this.message.push('Udfyld Titel');
@@ -77,11 +84,20 @@ export class BookComponent implements OnInit {
 
     if (this.message.length == 0) {
       if (this.book.id == 0) {
-        this.bookService.addBook(this.book)
-          .subscribe(b => {
-            this.books.push(b)
-            this.book = this.newBook();
-          });
+
+        const formData = new FormData();
+        for (const key of Object.keys(this.bookForm.value)) {
+          const value = this.bookForm.value[key];
+          formData.append(key, value);
+        }
+
+        this.http.post<Book>('https://localhost:5001/api/book', formData).subscribe(res => console.log(res));
+
+        // this.bookService.addBook(this.book)
+        //   .subscribe(b => {
+        //     this.books.push(b)
+        //     this.book = this.newBook();
+        //   });
       } else {
         this.bookService.updateBook(this.book.id, this.book)
           .subscribe(() => {

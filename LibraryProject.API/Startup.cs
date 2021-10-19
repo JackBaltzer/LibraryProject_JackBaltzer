@@ -5,6 +5,7 @@ using LibraryProject.API.Repositories;
 using LibraryProject.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,12 @@ namespace LibraryProject.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<FormOptions>(o => {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
+
             services.AddCors(options =>
             {
                 options.AddPolicy(name: CORSRules,
@@ -55,6 +62,7 @@ namespace LibraryProject.API
 
             services.AddDbContext<LibraryProjectContext>(
                o => o.UseSqlServer(_configuration.GetConnectionString("Default")));
+
 
             services.AddControllers().AddJsonOptions(x =>
             {

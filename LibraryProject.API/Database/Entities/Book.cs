@@ -23,5 +23,7 @@ namespace LibraryProject.API.Database.Entities
         public int AuthorId { get; set; }
 
         public Author Author { get; set; } 
+
+        public string Image { get; set; }
     }
 }

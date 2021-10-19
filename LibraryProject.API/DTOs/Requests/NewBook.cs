@@ -15,5 +15,7 @@ namespace LibraryProject.API.DTOs.Requests
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "AuthorId must be between 1 and 2147483647")]
         public int AuthorId { get; set; }
+
+        public string  Image { get; set; }
     }
 }

@@ -76,7 +76,8 @@ namespace LibraryProject.API.Services
             };
 
             book = await _bookRepository.Create(book);
-            Author author = await _authorRepository.GetById(book.AuthorId);
+            //Author author = await _authorRepository.GetById(book.AuthorId);
+            await _authorRepository.GetById(book.AuthorId);
 
             return book == null ? null : new BookResponse
             {
@@ -85,10 +86,10 @@ namespace LibraryProject.API.Services
                 Pages = book.Pages,
                 Author = new BookAuthorResponse
                 {
-                    Id = author.Id,
-                    FirstName = author.FirstName,
-                    LastName = author.LastName,
-                    MiddleName = author.MiddleName
+                    Id = book.Author.Id,
+                    FirstName = book.Author.FirstName,
+                    LastName = book.Author.LastName,
+                    MiddleName = book.Author.MiddleName
                 }
             };
         }
